@@ -6,6 +6,7 @@ import merge from 'merge'
 import isPlainObject from 'lodash.isplainobject'
 import debounce from 'lodash.debounce'
 import color from '../helpers/color'
+import listensToClickOutside from 'react-onclickoutside/decorator'
 
 import Photoshop from './photoshop/Photoshop'
 import Sketch from './sketched/Sketch'
@@ -29,7 +30,7 @@ class ColorPicker extends ReactCSS.Component {
     }, 100)
 
     this.handleChange = this.handleChange.bind(this)
-    this.handleHide = this.handleHide.bind(this)
+    this.handleClickOutside = this.handleClickOutside.bind(this)
     this.handleAccept = this.handleAccept.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
   }
@@ -100,7 +101,7 @@ class ColorPicker extends ReactCSS.Component {
     })
   }
 
-  handleHide() {
+  handleClickOutside(evt) {
     if (this.state.visible === true) {
       this.setState({
         visible: false,
@@ -166,7 +167,6 @@ class ColorPicker extends ReactCSS.Component {
         <div is="picker">
           <Picker {...this.props} {...this.state} onChange={ this.handleChange } onAccept={ this.handleAccept } onCancel={ this.handleCancel } />
         </div>
-        <div is="cover" onClick={ this.handleHide }/>
       </div>
     )
   }
@@ -185,4 +185,4 @@ ColorPicker.defaultProps = {
   positionCSS: {},
 }
 
-export default ColorPicker
+export default listensToClickOutside(ColorPicker)
